@@ -13,8 +13,8 @@ class MyPieChart extends StatelessWidget {
         child: PieChart(
             swapAnimationDuration: const Duration(milliseconds: 750),
             PieChartData(sections: [
-              PieChartSectionData(value: 20, color: Colors.blue),
-              PieChartSectionData(value: 80, color: Colors.amber)
+              PieChartSectionData(value: 20, color: Colors.blue, title: '20%'),
+              PieChartSectionData(value: 80, color: Colors.amber, title: '80%')
             ])),
       ),
     );
