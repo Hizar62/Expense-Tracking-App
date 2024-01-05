@@ -6,7 +6,17 @@ class MyPieChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PieChart(PieChartData(
-        sections: [PieChartSectionData(value: 20, color: Colors.blue)]));
+    return Center(
+      child: Container(
+        height: 300,
+        width: 300,
+        child: PieChart(
+            swapAnimationDuration: const Duration(milliseconds: 750),
+            PieChartData(sections: [
+              PieChartSectionData(value: 20, color: Colors.blue),
+              PieChartSectionData(value: 80, color: Colors.amber)
+            ])),
+      ),
+    );
   }
 }

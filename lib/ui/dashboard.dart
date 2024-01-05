@@ -21,42 +21,49 @@ class _DashBoardState extends State<DashBoard> {
             backgroundColor: Colors.black,
             foregroundColor: Colors.white,
           ),
-          body:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              "Add Account",
-              style: TextStyle(fontSize: 20),
-            ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            Center(
-              child: Container(
-                height: 100,
-                width: 350,
-                color: Colors.black12,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              "Add Expense",
-              style: TextStyle(fontSize: 20),
-            ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            Container(
-              height: 100,
-              width: 350,
-              color: Colors.black12,
-            ),
-            const MyPieChart()
-          ]),
+          body: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "Add Account",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  Center(
+                    child: Container(
+                      height: 100,
+                      width: 350,
+                      color: Colors.black12,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "Add Expense",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  Container(
+                    height: 100,
+                    width: 350,
+                    color: Colors.black12,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+
+                  const MyPieChart()
+                ]),
+          ),
         ));
   }
 }
