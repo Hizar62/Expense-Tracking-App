@@ -1,4 +1,6 @@
+import 'package:expensetrackingapp/ui/add_account.dart';
 import 'package:expensetrackingapp/ui/pi_chart.dart';
+import 'package:expensetrackingapp/widgets/roundbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -10,13 +12,14 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
-            title: Text("Dashboard"),
+            title: const Text("Dashboard"),
             centerTitle: true,
             backgroundColor: Colors.black,
             foregroundColor: Colors.white,
@@ -28,10 +31,7 @@ class _DashBoardState extends State<DashBoard> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    "Add Account",
-                    style: TextStyle(fontSize: 20),
-                  ),
+
                   // const SizedBox(
                   //   height: 20,
                   // ),
@@ -45,10 +45,27 @@ class _DashBoardState extends State<DashBoard> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    "Add Expense",
-                    style: TextStyle(fontSize: 20),
+                  RoundButton(
+                      title: "Add Account",
+                      // loading: loading,
+                      onTap: () {
+                        {
+                          setState(
+                            () {
+                              // loading = false;
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AddAccount()));
+                            },
+                          );
+                        }
+                      }),
+                  const SizedBox(
+                    height: 10,
                   ),
+
                   // const SizedBox(
                   //   height: 20,
                   // ),
@@ -58,9 +75,21 @@ class _DashBoardState extends State<DashBoard> {
                     color: Colors.black12,
                   ),
                   const SizedBox(
-                    height: 50,
+                    height: 10,
                   ),
-
+                  RoundButton(
+                      title: "Add Expense",
+                      // loading: loading,
+                      onTap: () {
+                        {
+                          setState(() {
+                            // loading = true;
+                          });
+                        }
+                      }),
+                  const SizedBox(
+                    height: 30,
+                  ),
                   const MyPieChart()
                 ]),
           ),
