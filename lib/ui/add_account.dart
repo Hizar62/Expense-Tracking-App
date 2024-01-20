@@ -1,3 +1,4 @@
+import 'package:expensetrackingapp/widgets/roundbutton.dart';
 import 'package:flutter/material.dart';
 
 class AddAccount extends StatefulWidget {
@@ -20,9 +21,9 @@ class _AddAccountState extends State<AddAccount> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: DropdownButton(
+        padding: const EdgeInsets.all(110.0),
+        child: Column(children: [
+          DropdownButton(
             hint: const Text("Select Account Type"),
             value: valueChoose,
             onChanged: (newValue) {
@@ -37,7 +38,21 @@ class _AddAccountState extends State<AddAccount> {
               );
             }).toList(),
           ),
-        ),
+          const SizedBox(
+            height: 40,
+          ),
+          TextFormField(
+            keyboardType: TextInputType.number,
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          RoundButton(
+              title: "Save",
+              onTap: () {
+                Navigator.pop(context);
+              })
+        ]),
       ),
     );
   }
