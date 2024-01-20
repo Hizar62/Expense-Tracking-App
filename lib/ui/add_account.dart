@@ -1,3 +1,4 @@
+import 'package:expensetrackingapp/ui/dashboard.dart';
 import 'package:expensetrackingapp/widgets/roundbutton.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +43,11 @@ class _AddAccountState extends State<AddAccount> {
             height: 40,
           ),
           TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Enter Ammount', // Add your hint here
+              labelText: 'Amount', // You can also add a label if needed
+              // You can customize other InputDecoration properties as needed
+            ),
             keyboardType: TextInputType.number,
           ),
           const SizedBox(

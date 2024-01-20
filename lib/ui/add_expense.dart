@@ -27,12 +27,23 @@ class _AddExpenseState extends State<AddExpense> {
           padding: const EdgeInsets.all(110.0),
           child: Column(
             children: [
-              TextFormField(),
+              TextFormField(
+                decoration: const InputDecoration(
+                  hintText: 'Expense name', // Add your hint here
+                  labelText: 'Expense', // You can also add a label if needed
+                  // You can customize other InputDecoration properties as needed
+                ),
+              ),
               const SizedBox(
                 height: 40,
               ),
               TextFormField(
                 keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  hintText: 'Enter Ammount', // Add your hint here
+                  labelText: 'Amount', // You can also add a label if needed
+                  // You can customize other InputDecoration properties as needed
+                ),
               ),
               const SizedBox(
                 height: 70,

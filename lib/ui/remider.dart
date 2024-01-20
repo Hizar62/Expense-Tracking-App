@@ -1,3 +1,4 @@
+import 'package:expensetrackingapp/ui/add_task.dart';
 import 'package:flutter/material.dart';
 
 class Reminder extends StatefulWidget {
@@ -10,6 +11,11 @@ class Reminder extends StatefulWidget {
 class _ReminderState extends State<Reminder> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Column(children: []),
+      ),
+    );
   }
 }
