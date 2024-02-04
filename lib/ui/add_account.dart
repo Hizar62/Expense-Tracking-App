@@ -1,3 +1,4 @@
+import 'package:expensetrackingapp/models/accounts_model.dart';
 import 'package:expensetrackingapp/ui/dashboard.dart';
 import 'package:expensetrackingapp/widgets/roundbutton.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,9 @@ class AddAccount extends StatefulWidget {
 }
 
 class _AddAccountState extends State<AddAccount> {
+  // final typeController = TextEditingController();
+  final amountController = TextEditingController();
+
   String? valueChoose;
   List listItems = ["Bank Account", "Easy Paisa", "Jazz Cash", "Cerdit Card"];
   @override
@@ -43,6 +47,7 @@ class _AddAccountState extends State<AddAccount> {
             height: 40,
           ),
           TextFormField(
+            controller: amountController,
             decoration: const InputDecoration(
               hintText: 'Enter Ammount', // Add your hint here
               labelText: 'Amount', // You can also add a label if needed
