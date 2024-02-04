@@ -1,7 +1,17 @@
+import 'package:expensetrackingapp/models/accounts_model.dart';
 import 'package:expensetrackingapp/ui/introscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  var directory = await getApplicationCacheDirectory();
+  Hive.init(directory.path);
+
+  Hive.registerAdapter(AccountModelAdapter());
+  await Hive.openBox<AccountModel>('account');
+
   runApp(const MyApp());
 }
 
