@@ -70,6 +70,7 @@ class _AddAccountState extends State<AddAccount> {
                 data.save();
 
                 amountController.clear();
+                Navigator.pop(context);
               },
               child: const Text("Save")),
         ]),
