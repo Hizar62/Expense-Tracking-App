@@ -1,3 +1,5 @@
+import 'package:expensetrackingapp/boxes/boxes.dart';
+import 'package:expensetrackingapp/models/expense_model.dart';
 import 'package:expensetrackingapp/widgets/roundbutton.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +11,8 @@ class AddExpense extends StatefulWidget {
 }
 
 class _AddExpenseState extends State<AddExpense> {
+  final expenseNameController = TextEditingController();
+  final expenseAmountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,6 +32,7 @@ class _AddExpenseState extends State<AddExpense> {
           child: Column(
             children: [
               TextFormField(
+                controller: expenseNameController,
                 decoration: const InputDecoration(
                   hintText: 'Expense name', // Add your hint here
                   labelText: 'Expense', // You can also add a label if needed
@@ -38,6 +43,7 @@ class _AddExpenseState extends State<AddExpense> {
                 height: 40,
               ),
               TextFormField(
+                controller: expenseAmountController,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   hintText: 'Enter Ammount', // Add your hint here
@@ -48,11 +54,21 @@ class _AddExpenseState extends State<AddExpense> {
               const SizedBox(
                 height: 70,
               ),
-              RoundButton(
-                  title: "Save",
-                  onTap: () {
+              TextButton(
+                  onPressed: () {
+                    final data = ExpenseModel(
+                        expenseName: expenseNameController.toString(),
+                        amount: int.parse(expenseAmountController.text));
+
+                    final box = Boxes.getExpenseBox();
+                    box.add(data);
+                    data.save();
+
+                    expenseNameController.clear();
+                    expenseAmountController.clear();
                     Navigator.pop(context);
-                  })
+                  },
+                  child: const Text("Save")),
             ],
           ),
         ),

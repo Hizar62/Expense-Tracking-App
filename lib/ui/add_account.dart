@@ -65,7 +65,7 @@ class _AddAccountState extends State<AddAccount> {
                     accountType: valueChoose.toString(),
                     amount: int.parse(amountController.text));
 
-                final box = Boxes.getData();
+                final box = Boxes.getAccountBox();
                 box.add(data);
                 data.save();
 

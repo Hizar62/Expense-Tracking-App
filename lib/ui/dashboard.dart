@@ -74,10 +74,8 @@ class DashBoardContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: Boxes.getData().listenable(),
+      valueListenable: Boxes.getAccountBox().listenable(),
       builder: (context, box, _) {
-        var data = box.values.cast<AccountModel>();
-
         return FutureBuilder<double>(
           future: calculateTotalAmount(),
           builder: (context, snapshot) {
@@ -163,6 +161,20 @@ class DashBoardContent extends StatelessWidget {
 
 Future<double> calculateTotalAmount() async {
   var box = await Hive.openBox<AccountModel>('account');
+
+  double totalAmount = 0.0;
+
+  for (var i = 0; i < box.length; i++) {
+    var account = box.getAt(i);
+    totalAmount += account!.amount
+        .toDouble(); // Assuming 'amount' is an int or double field
+  }
+
+  return totalAmount;
+}
+
+Future<double> calculateTotalExpenseAmount() async {
+  var box = await Hive.openBox<AccountModel>('expense');
 
   double totalAmount = 0.0;
 

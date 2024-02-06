@@ -1,4 +1,5 @@
 import 'package:expensetrackingapp/models/accounts_model.dart';
+import 'package:expensetrackingapp/models/expense_model.dart';
 import 'package:expensetrackingapp/ui/introscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -11,6 +12,9 @@ void main() async {
 
   Hive.registerAdapter(AccountModelAdapter());
   await Hive.openBox<AccountModel>('account');
+
+  Hive.registerAdapter(ExpenseModelAdapter());
+  await Hive.openBox<ExpenseModel>('expense');
 
   runApp(const MyApp());
 }
