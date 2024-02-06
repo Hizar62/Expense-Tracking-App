@@ -1,3 +1,4 @@
+import 'package:expensetrackingapp/boxes/boxes.dart';
 import 'package:expensetrackingapp/models/accounts_model.dart';
 import 'package:expensetrackingapp/ui/dashboard.dart';
 import 'package:expensetrackingapp/widgets/roundbutton.dart';
@@ -58,11 +59,19 @@ class _AddAccountState extends State<AddAccount> {
           const SizedBox(
             height: 40,
           ),
-          RoundButton(
-              title: "Save",
-              onTap: () {
-                Navigator.pop(context);
-              })
+          TextButton(
+              onPressed: () {
+                final data = AccountModel(
+                    accountType: valueChoose.toString(),
+                    amount: int.parse(amountController.text));
+
+                final box = Boxes.getData();
+                box.add(data);
+                data.save();
+
+                amountController.clear();
+              },
+              child: const Text("Save")),
         ]),
       ),
     );
