@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:expensetrackingapp/boxes/boxes.dart';
 import 'package:expensetrackingapp/models/accounts_model.dart';
 import 'package:expensetrackingapp/models/expense_model.dart';
@@ -10,7 +8,6 @@ import 'package:expensetrackingapp/ui/remider.dart';
 
 import 'package:expensetrackingapp/widgets/roundbutton.dart';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:hive_flutter/adapters.dart';
 
@@ -77,8 +74,6 @@ class DashBoardContent extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: Boxes.getAccountBox().listenable(),
       builder: (context, box, _) {
-        var data = box.values.cast<AccountModel>();
-
         return FutureBuilder<double>(
           future: calculateTotalAmount(),
           builder: (context, amountSnapshot) {
