@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class MyPieChart extends StatelessWidget {
-  const MyPieChart({super.key});
+  const MyPieChart({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,14 @@ class MyPieChart extends StatelessWidget {
           double totalAmount = snapshot.data![0];
           double totalExpenseAmount = snapshot.data![1];
 
+          // Calculate percentages
+          int totalPercentage =
+              ((totalAmount / (totalAmount + totalExpenseAmount)) * 100)
+                  .toInt();
+          int expensePercentage =
+              ((totalExpenseAmount / (totalAmount + totalExpenseAmount)) * 100)
+                  .toInt();
+
           return Center(
             child: Container(
               height: 300,
@@ -27,11 +35,11 @@ class MyPieChart extends StatelessWidget {
                 swapAnimationDuration: const Duration(milliseconds: 1050),
                 PieChartData(sections: [
                   PieChartSectionData(
-                    value: totalAmount,
+                    value: totalPercentage.toDouble(),
                     color: Colors.blue,
                   ),
                   PieChartSectionData(
-                    value: totalExpenseAmount,
+                    value: expensePercentage.toDouble(),
                     color: Colors.amber,
                   )
                 ]),
