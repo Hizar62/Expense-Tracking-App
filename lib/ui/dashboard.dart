@@ -21,7 +21,7 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   int _selectedIndex = 0;
   final List<Widget> _children = <Widget>[
-    DashBoardContent(),
+    const DashBoardContent(),
     Reminder(),
   ];
   bool loading = false;

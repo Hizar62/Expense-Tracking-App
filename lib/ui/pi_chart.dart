@@ -7,20 +7,39 @@ class MyPieChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: 300,
-        width: 300,
-        child: PieChart(
-            swapAnimationDuration: const Duration(milliseconds: 750),
-            PieChartData(sections: [
-              PieChartSectionData(value: 20, color: Colors.blue, title: ''),
-              PieChartSectionData(value: 80, color: Colors.amber, title: '')
-            ])),
-      ),
+    return FutureBuilder<List<double>>(
+      future:
+          Future.wait([calculateTotalAmount(), calculateTotalExpenseAmount()]),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          double totalAmount = snapshot.data![0];
+          double totalExpenseAmount = snapshot.data![1];
+
+          return Center(
+            child: Container(
+              height: 300,
+              width: 300,
+              child: PieChart(
+                swapAnimationDuration: const Duration(milliseconds: 1050),
+                PieChartData(sections: [
+                  PieChartSectionData(
+                    value: totalAmount,
+                    color: Colors.blue,
+                  ),
+                  PieChartSectionData(
+                    value: totalExpenseAmount,
+                    color: Colors.amber,
+                  )
+                ]),
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }
-
-Future<double> a = calculateTotalAmount();
-Future<double> b = calculateTotalExpenseAmount();
