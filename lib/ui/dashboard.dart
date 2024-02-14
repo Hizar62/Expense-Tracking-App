@@ -22,7 +22,7 @@ class _DashBoardState extends State<DashBoard> {
   int _selectedIndex = 0;
   final List<Widget> _children = <Widget>[
     const DashBoardContent(),
-    Reminder(),
+    const Reminder(),
   ];
   bool loading = false;
 
