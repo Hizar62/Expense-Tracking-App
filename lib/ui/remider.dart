@@ -1,3 +1,5 @@
+import 'package:expensetrackingapp/boxes/boxes.dart';
+import 'package:expensetrackingapp/models/reminder_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,6 +13,8 @@ class Reminder extends StatefulWidget {
 
 class _ReminderState extends State<Reminder> {
   DateTime selectedDateTime = DateTime.now();
+  final taskController = TextEditingController();
+  final descriptionController = TextEditingController();
 
   get flutterLocalNotificationsPlugin => null;
 
@@ -80,6 +84,7 @@ class _ReminderState extends State<Reminder> {
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
+                controller: taskController,
                 decoration: const InputDecoration(
                   hintText: 'Enter Task',
                   border: OutlineInputBorder(),
@@ -87,6 +92,7 @@ class _ReminderState extends State<Reminder> {
               ),
               const SizedBox(height: 10),
               TextFormField(
+                controller: descriptionController,
                 decoration: const InputDecoration(
                   hintText: 'Enter Description',
                   border: OutlineInputBorder(),
@@ -112,6 +118,14 @@ class _ReminderState extends State<Reminder> {
               onPressed: () {
                 // Add the logic to handle the selectedDateTime here
                 scheduleNotification(selectedDateTime);
+
+                final data = ReminderModel(
+                    taskname: taskController.toString(),
+                    date: selectedDateTime.toString());
+
+                final box = Boxes.getReminderBox();
+                box.add(data);
+                data.save();
 
                 Navigator.pop(context);
               },
