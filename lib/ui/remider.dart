@@ -2,7 +2,10 @@ import 'package:expensetrackingapp/boxes/boxes.dart';
 import 'package:expensetrackingapp/models/reminder_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:timezone/data/latest.dart' as tzdata;
+import 'package:timezone/timezone.dart' as tz;
 
 class Reminder extends StatefulWidget {
   const Reminder({Key? key}) : super(key: key);
@@ -16,7 +19,35 @@ class _ReminderState extends State<Reminder> {
   final taskController = TextEditingController();
   final descriptionController = TextEditingController();
 
-  get flutterLocalNotificationsPlugin => null;
+  @override
+  void initState() {
+    super.initState();
+
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    initializeNotifications();
+  }
+
+  Future<void> initializeNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings(
+            'app_icon'); // Replace with your app icon name
+    // final IOSInitializationSettings initializationSettingsIOS =
+    //     IOSInitializationSettings();
+
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+      // iOS: initializationSettingsIOS,
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      // You can omit onSelectNotification here
+    );
+  }
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
   Future<void> checkAndRequestPermissions() async {
     if (await Permission.notification.request().isGranted) {
@@ -61,8 +92,45 @@ class _ReminderState extends State<Reminder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const Column(
-        children: [],
+      body: ValueListenableBuilder<Box<ReminderModel>>(
+        valueListenable: Boxes.getReminderBox().listenable(),
+        builder: (context, box, _) {
+          return ListView.builder(
+            itemCount: box.length,
+            itemBuilder: (context, index) {
+              var data = box.values.toList().cast<ReminderModel>();
+
+              return Card(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(data[index].taskname.toString()),
+                          Spacer(),
+                          InkWell(
+                            onTap: () {
+                              delete(data[index]);
+                            },
+                            child: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            ),
+                          )
+                        ],
+                      ),
+                      Text(data[index].date)
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -120,7 +188,7 @@ class _ReminderState extends State<Reminder> {
                 scheduleNotification(selectedDateTime);
 
                 final data = ReminderModel(
-                    taskname: taskController.toString(),
+                    taskname: taskController.text,
                     date: selectedDateTime.toString());
 
                 final box = Boxes.getReminderBox();
@@ -150,12 +218,34 @@ class _ReminderState extends State<Reminder> {
       // iOS: iOSPlatformChannelSpecifics,
     );
 
-    await flutterLocalNotificationsPlugin.schedule(
-      0,
-      'Reminder',
-      'Pay your bills',
-      scheduledTime,
-      platformChannelSpecifics,
-    );
+    Future<void> scheduleNotification(DateTime scheduledTime) async {
+      tzdata.initializeTimeZones();
+      final location = tz.getLocation('Asia/Karachi');
+
+      var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+        'my_app_channel_id',
+        'Reminder Pay Your Bills',
+        importance: Importance.high,
+        priority: Priority.high,
+      );
+
+      var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+      );
+
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        'Reminder',
+        'Pay your bills',
+        tz.TZDateTime.from(scheduledTime, location),
+        platformChannelSpecifics,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+      );
+    }
   }
+}
+
+void delete(ReminderModel remindermodel) async {
+  await remindermodel.delete();
 }

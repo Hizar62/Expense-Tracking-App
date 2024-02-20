@@ -19,6 +19,12 @@ class MyPieChart extends StatelessWidget {
           double totalAmount = snapshot.data![0];
           double totalExpenseAmount = snapshot.data![1];
 
+          // Check for division by zero
+          if (totalAmount + totalExpenseAmount == 0) {
+            // Handle the case when both totalAmount and totalExpenseAmount are zero.
+            return Text('No data available.');
+          }
+
           // Calculate percentages
           int totalPercentage =
               ((totalAmount / (totalAmount + totalExpenseAmount)) * 100)
@@ -35,10 +41,12 @@ class MyPieChart extends StatelessWidget {
                 swapAnimationDuration: const Duration(milliseconds: 1050),
                 PieChartData(sections: [
                   PieChartSectionData(
+                    title: 'Amount $totalPercentage%',
                     value: totalPercentage.toDouble(),
                     color: Colors.blue,
                   ),
                   PieChartSectionData(
+                    title: 'Expense $expensePercentage%',
                     value: expensePercentage.toDouble(),
                     color: Colors.amber,
                   )

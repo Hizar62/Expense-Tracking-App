@@ -3,6 +3,7 @@ import 'package:expensetrackingapp/models/expense_model.dart';
 import 'package:expensetrackingapp/models/reminder_model.dart';
 import 'package:expensetrackingapp/ui/introscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -17,7 +18,7 @@ void main() async {
   Hive.registerAdapter(ExpenseModelAdapter());
   await Hive.openBox<ExpenseModel>('expense');
 
-  Hive.registerAdapter(ExpenseModelAdapter());
+  Hive.registerAdapter(ReminderModelAdapter());
   await Hive.openBox<ReminderModel>('reminder');
 
   runApp(const MyApp());
