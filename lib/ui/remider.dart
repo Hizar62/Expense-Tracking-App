@@ -2,6 +2,7 @@ import 'package:expensetrackingapp/boxes/boxes.dart';
 import 'package:expensetrackingapp/models/reminder_model.dart';
 import 'package:expensetrackingapp/notification_services.dart';
 import 'package:flutter/material.dart';
+
 import 'package:hive_flutter/adapters.dart';
 
 class Reminder extends StatefulWidget {
@@ -44,7 +45,7 @@ class _ReminderState extends State<Reminder> {
                       Row(
                         children: [
                           Text(data[index].taskname.toString()),
-                          Spacer(),
+                          const Spacer(),
                           InkWell(
                             onTap: () {
                               delete(data[index]);
@@ -144,9 +145,11 @@ class _ReminderState extends State<Reminder> {
               onPressed: () {
                 debugPrint('Notification Scheduled for $scheduleTime');
                 NotificationService().scheduleNotification(
-                    title: 'Scheduled Notification',
-                    body: '$scheduleTime',
+                    title: taskController.toString(),
+                    body: descriptionController.toString(),
                     scheduledNotificationDateTime: scheduleTime);
+
+                // DataBase
                 final data = ReminderModel(
                     taskname: taskController.text,
                     date: scheduleTime.toString());

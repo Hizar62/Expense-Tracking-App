@@ -7,7 +7,7 @@ class NotificationService {
 
   Future<void> initNotification() async {
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('flutter_logo');
+        const AndroidInitializationSettings('flutter_logo.png');
 
     var initializationSettingsIOS = DarwinInitializationSettings(
         requestAlertPermission: true,
@@ -23,10 +23,10 @@ class NotificationService {
             (NotificationResponse notificationResponse) async {});
   }
 
-  notificationDetails() {
+  NotificationDetails notificationDetails() {
     return const NotificationDetails(
-        android: AndroidNotificationDetails('channelId', 'channelName',
-            importance: Importance.max, icon: 'flutter_logo'),
+        android: AndroidNotificationDetails('0', 'Reminder',
+            importance: Importance.max, icon: 'flutter_logo.png'),
         iOS: DarwinNotificationDetails());
   }
 
@@ -51,7 +51,6 @@ class NotificationService {
           tz.local,
         ),
         await notificationDetails(),
-        androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
