@@ -13,5 +13,5 @@ Expense Tracking App is a Flutter application designed to help users manage thei
 ## Demo
 
 <p align="center">
-    <img src="demo22.gif">
+    <img src="demo2.gif">
 </p>
