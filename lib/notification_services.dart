@@ -7,7 +7,7 @@ class NotificationService {
 
   Future<void> initNotification() async {
     AndroidInitializationSettings initializationSettingsAndroid =
-        const AndroidInitializationSettings('flutter_logo.png');
+        const AndroidInitializationSettings('flutter_logo');
 
     var initializationSettingsIOS = DarwinInitializationSettings(
         requestAlertPermission: true,
@@ -26,7 +26,7 @@ class NotificationService {
   NotificationDetails notificationDetails() {
     return const NotificationDetails(
         android: AndroidNotificationDetails('0', 'Reminder',
-            importance: Importance.max, icon: 'flutter_logo.png'),
+            importance: Importance.max, icon: 'flutter_logo'),
         iOS: DarwinNotificationDetails());
   }
 
@@ -42,6 +42,12 @@ class NotificationService {
       String? body,
       String? payLoad,
       required DateTime scheduledNotificationDateTime}) async {
+    print(
+        'Scheduling notification: $title, $body, $scheduledNotificationDateTime');
+    if (scheduledNotificationDateTime.isBefore(DateTime.now())) {
+      print('Invalid scheduled time. Must be in the future.');
+      return;
+    }
     return notificationsPlugin.zonedSchedule(
         id,
         title,

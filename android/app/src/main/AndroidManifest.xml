@@ -32,7 +32,10 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
                 />
-              
+            <meta-data
+              android:name="androidx.work.WorkManagerInitializer"
+              android:value="androidx.work.impl.WorkManagerInitializer" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

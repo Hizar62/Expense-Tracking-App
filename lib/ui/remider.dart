@@ -145,8 +145,8 @@ class _ReminderState extends State<Reminder> {
               onPressed: () {
                 debugPrint('Notification Scheduled for $scheduleTime');
                 NotificationService().scheduleNotification(
-                    title: taskController.toString(),
-                    body: descriptionController.toString(),
+                    title: taskController.text,
+                    body: descriptionController.text,
                     scheduledNotificationDateTime: scheduleTime);
 
                 // DataBase
