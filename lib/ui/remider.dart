@@ -44,7 +44,12 @@ class _ReminderState extends State<Reminder> {
                     children: [
                       Row(
                         children: [
-                          Text(data[index].taskname.toString()),
+                          Text(
+                            data[index].taskname.toString(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: Checkbox.width),
+                          ),
                           const Spacer(),
                           InkWell(
                             onTap: () {

@@ -5,7 +5,6 @@ import 'package:expensetrackingapp/ui/add_account.dart';
 import 'package:expensetrackingapp/ui/add_expense.dart';
 import 'package:expensetrackingapp/ui/pi_chart.dart';
 import 'package:expensetrackingapp/ui/remider.dart';
-
 import 'package:expensetrackingapp/widgets/roundbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -20,6 +19,7 @@ class DashBoard extends StatefulWidget {
 
 class _DashBoardState extends State<DashBoard> {
   int _selectedIndex = 0;
+
   final List<Widget> _children = <Widget>[
     const DashBoardContent(),
     const Reminder(),
@@ -59,6 +59,13 @@ class _DashBoardState extends State<DashBoard> {
           centerTitle: true,
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
+          actions: [
+            PopupMenuButton(
+              itemBuilder: (context) =>
+                  [PopupMenuItem<int>(value: 0, child: Text('Clear data'))],
+              onSelected: (item) => selectedItem(context, item),
+            )
+          ],
         ),
         body: _children[_selectedIndex],
       ),
@@ -202,12 +209,17 @@ Future<double> calculateTotalAmount() async {
 Future<double> calculateTotalExpenseAmount() async {
   var box = await Hive.openBox<ExpenseModel>('expense');
 
-  double totalAmount = 0.0;
+  double totalExpenseAmount = 0.0;
 
   for (var i = 0; i < box.length; i++) {
     var account = box.getAt(i);
-    totalAmount += account!.amount.toDouble();
+    totalExpenseAmount += account!.amount.toDouble();
   }
 
-  return totalAmount;
+  return totalExpenseAmount;
+}
+
+selectedItem(BuildContext context, item) async {
+  await Boxes.getAccountBox().clear();
+  await Boxes.getExpenseBox().clear();
 }
