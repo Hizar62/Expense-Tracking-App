@@ -25,7 +25,8 @@ class _IntroScreenState extends State<IntroScreen> {
     },
   ];
 
-  final CarouselController carouselController = CarouselController();
+  final CarouselSliderController carouselController =
+      CarouselSliderController();
 
   int currentIndex = 0;
 
@@ -98,7 +99,7 @@ class _IntroScreenState extends State<IntroScreen> {
                             borderRadius: BorderRadius.circular(10),
                             color: currentIndex == entry.key
                                 ? const Color.fromARGB(255, 0, 0, 0)
-                                : Color.fromARGB(255, 87, 85, 85),
+                                : const Color.fromARGB(255, 87, 85, 85),
                           ),
                         ),
                       );

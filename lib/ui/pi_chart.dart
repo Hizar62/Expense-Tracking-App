@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class MyPieChart extends StatelessWidget {
-  const MyPieChart({Key? key});
+  const MyPieChart({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class MyPieChart extends StatelessWidget {
           Future.wait([calculateTotalAmount(), calculateTotalExpenseAmount()]),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -22,7 +22,7 @@ class MyPieChart extends StatelessWidget {
           // Check for division by zero
           if (totalAmount + totalExpenseAmount == 0) {
             // Handle the case when both totalAmount and totalExpenseAmount are zero.
-            return Text('No data available.');
+            return const Text('No data available.');
           }
 
           // Calculate percentages
@@ -34,7 +34,7 @@ class MyPieChart extends StatelessWidget {
                   .toInt();
 
           return Center(
-            child: Container(
+            child: SizedBox(
               height: 300,
               width: 300,
               child: PieChart(

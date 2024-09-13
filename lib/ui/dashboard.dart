@@ -32,7 +32,7 @@ class _DashBoardState extends State<DashBoard> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         bottomNavigationBar: GNav(
-          backgroundColor: Color.fromARGB(255, 0, 0, 0),
+          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
           color: Colors.white,
           activeColor: Colors.white,
           tabs: const [
@@ -62,7 +62,7 @@ class _DashBoardState extends State<DashBoard> {
           actions: [
             PopupMenuButton(
               itemBuilder: (context) =>
-                  [PopupMenuItem<int>(value: 0, child: Text('Clear data'))],
+                  [const PopupMenuItem<int>(value: 0, child: Text('Clear data'))],
               onSelected: (item) => selectedItem(context, item),
             )
           ],
@@ -85,7 +85,7 @@ class DashBoardContent extends StatelessWidget {
           future: calculateTotalAmount(),
           builder: (context, amountSnapshot) {
             if (amountSnapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (amountSnapshot.hasError) {
               return Text(
                   'Error calculating total amount: ${amountSnapshot.error}');
@@ -98,7 +98,7 @@ class DashBoardContent extends StatelessWidget {
                     builder: (context, expenseSnapshot) {
                       if (expenseSnapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       } else if (expenseSnapshot.hasError) {
                         return Text(
                             'Error calculating total expense amount: ${expenseSnapshot.error}');

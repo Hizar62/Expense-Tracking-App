@@ -33,7 +33,7 @@ class NotificationService {
   Future showNotification(
       {int id = 0, String? title, String? body, String? payLoad}) async {
     return notificationsPlugin.show(
-        id, title, body, await notificationDetails());
+        id, title, body, notificationDetails());
   }
 
   Future scheduleNotification(
@@ -56,7 +56,7 @@ class NotificationService {
           scheduledNotificationDateTime,
           tz.local,
         ),
-        await notificationDetails(),
+        notificationDetails(),
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
   }
